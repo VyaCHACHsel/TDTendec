@@ -1,4 +1,4 @@
-THANK YOU FOR RECEIVING TONAL DATA TRANSMISSION ENCODER/DECODER (TDTendec), VERSION 1.12.3
+THANK YOU FOR RECEIVING TONAL DATA TRANSMISSION ENCODER/DECODER (TDTendec), VERSION 1.12.17
 =====
 The following text contains full instructions to install and use the TDTendec application programme on your computer.
 
@@ -25,6 +25,19 @@ To decode the audio back to the data file:
 
 IMPORTANT: Don't switch the order, as it will result in an error or file corruption!
 
+Changelog:
+-----
+1.12.2:
+- The first public version.
+
+1.12.3:
+- Fixed the bug that made Linux users unable to decode TDT signals.
+- Corrected the color gamma.
+
+1.12.17:
+- Division frequency now really synchronizes between byte pairs.
+- Inability to determine the frequency doesn't make the program go, or rather stop bonkers anymore.
+- Its "Read me" file now has a changelog.
 
 
 
