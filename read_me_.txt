@@ -1,4 +1,4 @@
-THANK YOU FOR RECEIVING TONAL DATA TRANSMISSION ENCODER/DECODER (TDTendec), VERSION 1.12.17
+THANK YOU FOR RECEIVING TONAL DATA TRANSMISSION ENCODER/DECODER (TDTendec), VERSION 1.12.21
 =====
 The following text contains full instructions to install and use the TDTendec application programme on your computer.
 
@@ -14,14 +14,16 @@ TDTendec can encode and decode files into audio ready to be transmitted. A termi
 To encode the file into the audio:
 1. Type in the name of the programme,
 2. Type "-e" or "--encode",
-3. Type the name of the future AUDIO file
-4. Type the name of the DATA file
+3. Type the name of the future AUDIO file,
+4. Type the name of the DATA file,
+5. Type the mode to transmit in.
 
 To decode the audio back to the data file:
 1. Type in the name of the programme,
 2. Type "-d" or "--decode",
-3. Type the name of the AUDIO file
-4. Type the name of the future DATA file
+3. Type the name of the AUDIO file,
+4. Type the name of the future DATA file,
+5. Type the mode in which the transmission is in.
 
 IMPORTANT: Don't switch the order, as it will result in an error or file corruption!
 
@@ -39,6 +41,9 @@ Changelog:
 - Inability to determine the frequency doesn't make the program go, or rather stop bonkers anymore.
 - Its "Read me" file now has a changelog.
 
+1.12.21:
+- Two new modes: TDTH4-40 & TDTH4-80.
+- "mode" argument is now in use.
 
 
 (c) 2023 Vyacheslav "VyaCHACHsel" Kirnos, All rights reserved.

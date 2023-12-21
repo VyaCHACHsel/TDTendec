@@ -1,5 +1,5 @@
 """
-TDTendec - Tonal Data Transmission Encoder/Decoder, Version 1.12.17
+TDTendec - Tonal Data Transmission Encoder/Decoder, Version 1.12.21
 (c) 2023 Vyacheslav "VyaCHACHsel" Kirnos, All rights reserved.
 Based on "Frequency Shift Keying in Python"
 Copyright (c) 2023 Joey Manani
@@ -21,7 +21,7 @@ import traceback
 from alive_progress import alive_bar
 import platform as plat
 
-class FrequencyShiftKeying:
+class TDTHyper4:
     """Generate a wave file containing FSK encoded data."""
     def __init__(self, duration: int, sample_rate: int):
         # self._high_frequency = 1000
@@ -74,7 +74,7 @@ class FrequencyShiftKeying:
             phase = 0.0
             two_bits = ""
             bytecounter = 0
-            i = 16
+            i = 16 if self._duration==375 else 40 if self._duration==150 else 20
             while i > 0:
                 i-=1
                 phase = self._create_sine_wave(self._11_freq, phase)
@@ -84,7 +84,7 @@ class FrequencyShiftKeying:
                 i-=1
                 phase = self._create_sine_wave(self._div_freq, phase)
                 
-            i=16
+            i=32 if self._duration==150 else 16
             while i > 0:
                 i-=1
                 if i % 2 == 0:
@@ -295,21 +295,31 @@ class FrequencyShiftKeying:
 
 
 if __name__ == "__main__":
-    print(f'{Style.BRIGHT}{Fore.CYAN}TDTendec - Tonal Data Transmission Encoder/Decoder{Fore.YELLOW} V.1.12.17\n{Fore.BLACK}(c) 2023 Vyacheslav "VyaCHACHsel" Kirnos, All rights reserved.\nBased on "Frequency Shift Keying in Python" (c) 2023 Joey Manani\n\n{Fore.RESET}{Style.NORMAL}{Fore.CYAN}')
+    print(f'{Style.BRIGHT}{Fore.CYAN}TDTendec - Tonal Data Transmission Encoder/Decoder{Fore.YELLOW} V.1.12.21\n{Fore.BLACK}(c) 2023 Vyacheslav "VyaCHACHsel" Kirnos, All rights reserved.\nBased on "Frequency Shift Keying in Python" (c) 2023 Joey Manani\n\n{Fore.RESET}{Style.NORMAL}{Fore.CYAN}')
     parser = argparse.ArgumentParser(prog='TDTendec',description='This program is used to encode and decode data using Tonal Data Transmission (TDT).', usage='%(prog)s --encode/--decode audiofile datafile mode')
     parser.add_argument('-e','--encode', action='store_const', const=True, default=False, help='Encode the data into an audio file.')
     parser.add_argument('-d','--decode', action='store_const', const=True, default=False, help='Decode the audio file into data.')
     parser.add_argument('audiofile', default="", help='An audio file (to be) containing encoded information. Should only be in RIFF *.wav format.')
     parser.add_argument('datafile', default="", help='A file (to be) containing decoded/to be encoded information. Can be literally anything, but the larger is the file, the longer the transfer is and the bigger is the audio file.')
+    parser.add_argument('mode', default="No. - Lara Croft", help='Specifies the mode used. Can be one of the following: TDTH4-22, TDTH4-40, TDTH4-80.')
     #parser.add_argument('mode', default="", help='Specifies the mode used. Can be one of the following: TDT-11, TDT-22, TDTH4-22, TDTH4-40, TDTH8-40.')
     try:
         args = parser.parse_args()
         #print("Successfully parsed args: ", args)
         if operator.xor(args.encode, args.decode) == 0:
             raise ValueError("misuse of --encode and --decode args: please use only one of them.")
+        if args.mode == "No. - Lara Croft":
+            raise ValueError("mode was not specified!")
         try:
             print(f'{Fore.RESET}Preparing the library...')
-            fsk = FrequencyShiftKeying(duration=375, sample_rate=12000)
+            if args.mode.lower() == "tdth4-22":
+                fsk = TDTHyper4(duration=375, sample_rate=12000)
+            elif args.mode.lower() == "tdth4-40":
+                fsk = TDTHyper4(duration=300, sample_rate=12000)
+            elif args.mode.lower() == "tdth4-80":
+                fsk = TDTHyper4(duration=150, sample_rate=12000)
+            else:
+                raise ValueError("Mode specified doesn't exist!")
             #print("debug: audiofile name getting")
             audiofile = args.audiofile
             #print("debug: opening datafile")
